@@ -6,9 +6,13 @@ from freemarker.template import Configuration, TemplateExceptionHandler
 
 
 def calculate_distribution(data, key):
-    counts = Counter(user[key] for user in data)
-    total = len(data)
-    return {k: (v / total * 100) for k, v in counts.items()}
+    # Convert boolean values to strings if necessary
+    counts = Counter(str(user[key]) if isinstance(user[key], bool) else user[key] for user in data)
+    total = float(len(data))  # Use float for Python 2.7 division compatibility
+    distribution = {k: (v / total * 100) for k, v in counts.items()}
+    print("Distribution for {}: {}".format(key, distribution))
+    return distribution
+
 
 def main():
     try:
@@ -44,10 +48,15 @@ def main():
         # Process the template
         output = StringWriter()
         template.process(data_model, output)
+        generated_html = output.toString()
+
+        # Debug print the generated HTML
+        print("Generated HTML:")
+        print(generated_html)
 
         # Save the output to an HTML file
         with open("dashboard.html", "w") as f:
-            f.write(output.toString())
+            f.write(generated_html)
 
     except Exception as e:
         print("An error occurred: {0}".format(e))

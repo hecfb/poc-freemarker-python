@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Dashboard with Charts</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             background-color: #121212;
@@ -12,27 +12,35 @@
     
         canvas {
             margin: 20px auto;
+            margin-top: 20px;
             display: block;
+            max-height: 400px;
+            width: 100%;
         }
+        div {
+            width: 400px;
+            height: 400px;
+        }
+    
     </style>
 </head>
 <body>
     <h1>User Dashboard</h1>
     
     <!-- Canvas for Eye Color Chart -->
-    <div>
+    <div class="chart-container">
         <h2>Eye Color Distribution</h2>
         <canvas id="eyeColorChart" width="400" height="400"></canvas>
     </div>
 
     <!-- Canvas for IsActive Chart -->
-    <div>
+    <div class="chart-container">
         <h2>Active User Distribution</h2>
         <canvas id="isActiveChart" width="400" height="400"></canvas>
     </div>
 
     <!-- Canvas for Gender Chart -->
-    <div>
+    <div class="chart-container">
         <h2>Gender Distribution</h2>
         <canvas id="genderChart" width="400" height="400"></canvas>
     </div>
@@ -74,9 +82,18 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
+                    maintainAspectRatio: true,
                     theme: {
                         mode: 'dark'
+                        
+                    }
+                },
+                options: {
+                    layout: {
+                        padding: {
+                            top: 20
+                            
+                        }
                     }
                 }
             });
